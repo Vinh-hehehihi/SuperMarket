@@ -1,5 +1,6 @@
 package com.example.supermarket.dto;
 
+import com.example.supermarket.entity.MemberCard;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
@@ -16,4 +17,5 @@ public class MemberDTO {
 
     private Integer loyaltyPoints;
     private Boolean isActive;
+    private MemberCard memberCard;
 }

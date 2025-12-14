@@ -69,6 +69,7 @@ public class MemberService implements IMemberService {
         dto.setGender(member.getGender());
         dto.setBirthDate(member.getBirthDate());
         dto.setLoyaltyPoints(member.getLoyaltyPoints());
+        dto.setMemberCard(member.getMemberCard());
         dto.setIsActive(member.getIsActive());
 
         return dto;

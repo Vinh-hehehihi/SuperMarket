@@ -65,10 +65,20 @@
                         </div>
 
                         <hr>
-                        <div class="d-flex justify-content-end">
-                            <a th:href="@{/admin/members/edit/{id}(id=${member.memberID})}" class="btn btn-warning">
-                                <i class="fa-solid fa-pen-to-square"></i> Cập nhật thông tin
+                        <div class="d-flex justify-content-between mt-4">
+                            <a th:href="@{/admin/members}" class="btn btn-secondary">
+                                <i class="fa-solid fa-arrow-left"></i> Quay lại
                             </a>
+
+                            <div>
+                                <a th:href="@{/admin/cards/view/{id}(id=${member.memberID})}" class="btn btn-primary">
+                                    <i class="fa-solid fa-id-card"></i> Quản lý thẻ thành viên
+                                </a>
+
+                                <a th:href="@{/admin/members/edit/{id}(id=${member.memberID})}" class="btn btn-warning ms-2">
+                                    <i class="fa-solid fa-pen-to-square"></i> Sửa thông tin
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
