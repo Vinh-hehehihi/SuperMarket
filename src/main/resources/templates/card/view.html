@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thẻ thành viên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .atm-card {
+            width: 400px;
+            height: 250px;
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        .atm-card:hover {
+            transform: scale(1.02);
+        }
+        .card-chip {
+            width: 50px;
+            height: 35px;
+            background: linear-gradient(135deg, #ffd700, #ffcc00);
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .card-number {
+            font-size: 24px;
+            letter-spacing: 4px;
+            font-family: 'Courier New', monospace;
+            text-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+        .card-bg-active {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+        }
+        .card-bg-locked {
+            background: linear-gradient(45deg, #636363, #a2ab58);
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="text-center mb-4">
+        <h3>Quản lý thẻ: <span class="text-primary" th:text="${member.fullName}"></span></h3>
+        <p class="text-muted">Mã thành viên: <span th:text="${member.memberCode}"></span></p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+
+            <div th:if="${card == null}" class="card shadow p-5">
+                <div class="card-body">
+                    <i class="fa-solid fa-credit-card fa-5x text-secondary mb-3"></i>
+                    <h4>Thành viên này chưa có thẻ</h4>
+                    <p class="text-muted">Hãy cấp thẻ vật lý để khách hàng tích điểm.</p>
+                    <a th:href="@{/admin/cards/issue/{id}(id=${member.memberID})}"
+                       class="btn btn-success btn-lg mt-2">
+                        <i class="fa-solid fa-plus-circle"></i> Cấp thẻ mới ngay
+                    </a>
+                </div>
+            </div>
+
+            <div th:if="${card != null}">
+
+                <div class="atm-card mx-auto mb-4"
+                     th:classappend="${card.isActive} ? 'card-bg-active' : 'card-bg-locked'">
+
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold">SUPERMARKET</span>
+                        <span th:if="${!card.isActive}" class="badge bg-danger">LOCKED</span>
+                    </div>
+
+                    <div class="card-chip mt-3"></div>
+
+                    <div class="card-number text-center" th:text="${card.cardNumber}">
+                        #### #### ####
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4 align-items-end">
+                        <div class="text-start">
+                            <small style="font-size: 10px; opacity: 0.8">CHỦ THẺ</small><br>
+                            <span class="fw-bold" th:text="${member.fullName.toUpperCase()}">NAME</span>
+                        </div>
+                        <div class="text-end">
+                            <small style="font-size: 10px; opacity: 0.8">HẾT HẠN</small><br>
+                            <span class="fw-bold" th:text="${#dates.format(card.expiryAt, 'MM/yy')}">MM/YY</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 col-8 mx-auto">
+                    <a th:href="@{/admin/cards/toggle/{cid}/{mid}(cid=${card.cardID}, mid=${member.memberID})}"
+                       class="btn btn-lg"
+                       th:classappend="${card.isActive} ? 'btn-danger' : 'btn-success'"
+                       onclick="return confirm('Bạn có chắc chắn muốn thay đổi trạng thái thẻ?');">
+                        <i class="fa-solid" th:classappend="${card.isActive} ? 'fa-lock' : 'fa-lock-open'"></i>
+                        <span th:text="${card.isActive} ? 'Khóa thẻ này' : 'Mở khóa thẻ'"></span>
+                    </a>
+                </div>
+
+                <div class="mt-3 text-muted fst-italic">
+                    <small th:if="${card.isActive}">Thẻ đang hoạt động bình thường.</small>
+                    <small th:unless="${card.isActive}">Thẻ đang bị tạm khóa. Khách hàng không thể tích điểm.</small>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <a th:href="@{/admin/members/detail/{id}(id=${member.memberID})}" class="btn btn-link text-decoration-none">
+                    <i class="fa-solid fa-arrow-left"></i> Quay về hồ sơ thành viên
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
