@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .csrf(Customizer.withDefaults())
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/index","/package","/home","/ws/**","/auth/**","/orders/**", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/index","/login","/package","/ws/**","/auth/**","/orders/**", "/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/login")
                         .usernameParameter("usernameOrEmail")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/home", true)
+                        .defaultSuccessUrl("/homepage", true)
                         .permitAll()
                 )
 
