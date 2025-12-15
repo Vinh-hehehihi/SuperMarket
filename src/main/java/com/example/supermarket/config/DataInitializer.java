@@ -40,6 +40,7 @@ public class DataInitializer implements CommandLineRunner {
             admin.get().setPassword(passwordEncoder.encode("admin"));
             admin.get().setIsActive(true);
             admin.get().setPhone("0987654321");
+            admin.get().setRole(Employee.Role.ADMIN);
             employeeService.createOrUpdate(admin.orElse(null));
             System.out.println("Admin create succesfully");
         }

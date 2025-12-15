@@ -5,13 +5,9 @@ import com.example.supermarket.dto.EmployeeUpdateDTO;
 import com.example.supermarket.entity.Employee;
 import com.example.supermarket.repository.EmployeeRepository;
 import com.example.supermarket.service.IEmployeeService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -116,41 +112,10 @@ public class EmployeeService implements IEmployeeService {
 
     }
 
-    @Override
-    public Employee loginEmployee(String usernameOrEmail, String password) {
-        Employee employee = findByUsernameOrEmail(usernameOrEmail);
 
-        if(employee == null){
-            return null;
-        }
-
-        if(!employee.getIsActive()){
-            return null;
-        }
-
-        if (!passwordEncoder.matches(password, employee.getPassword())){
-            return null;
-        }
-
-        return employee;
-
-    }
 
     @Override
-    public boolean authenticateEmployee(String usernameOrEmail, String password, HttpSession session) {
-        Employee employee = loginEmployee(usernameOrEmail,password);
-        if(employee == null || !employee.getIsActive()){
-            return false;
-        }
-
-        EmployeeUserDetails userDetails = new EmployeeUserDetails(employee);
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
-
-        return true;
-
+    public Employee createOrUpdate(Employee model) {
+        return employeeRepository.save(model);
     }
 }
