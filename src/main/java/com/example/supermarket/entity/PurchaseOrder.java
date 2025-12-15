@@ -1,12 +1,17 @@
 package com.example.supermarket.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "PurchaseOrder")
+@Getter
+@Setter
 public class PurchaseOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +20,7 @@ public class PurchaseOrder {
     private String poNumber;
     private Date poDate;
     private Double totalAmount;
+    @Nationalized
     private String status;
 
     @ManyToOne

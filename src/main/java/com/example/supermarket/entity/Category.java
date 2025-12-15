@@ -1,11 +1,16 @@
 package com.example.supermarket.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 
 import java.util.List;
 
 @Entity
 @Table(name = "Category")
+@Getter
+@Setter
 public class Category {
 
     @Id
@@ -16,6 +21,7 @@ public class Category {
     private String categoryCode;
 
     @Column(nullable = false)
+    @Nationalized
     private String categoryName;
 
     private String description;
