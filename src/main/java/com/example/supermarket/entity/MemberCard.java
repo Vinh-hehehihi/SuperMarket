@@ -1,10 +1,12 @@
 package com.example.supermarket.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
+@Data
 @Table(name = "MemberCard")
 public class MemberCard {
     @Id

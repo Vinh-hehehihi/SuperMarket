@@ -1,10 +1,8 @@
 package com.example.supermarket.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.Nationalized;
 
+@Data
 @Entity
 @Table(name = "Employee")
 @Getter
@@ -16,13 +14,12 @@ public class Employee {
     private Integer employeeID;
 
     private String employeeCode;
-    @Nationalized
     private String fullName;
     private String phone;
     private String email;
 
     private String username;
-    private String passwordHash;
+    private String password;
     private String role;
 
     private Boolean isActive = true;
