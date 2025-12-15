@@ -1,0 +1,255 @@
+/* ========== Biến màu & font cơ bản ========== */
+:root {
+    --primary-color: #28a745;
+    --primary-dark: #1e7e34;
+    --secondary-color: #ffc107;
+    --text-color: #212529;
+    --muted-text: #6c757d;
+    --bg-light: #f8f9fa;
+    --bg-soft: #f3f5f7;
+    --border-color: #e0e0e0;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ========== Global ========== */
+html, body {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--text-color);
+    background-color: #ffffff;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Tittle chung */
+h1, h2, h3, h4, h5 {
+    font-weight: 600;
+}
+
+/* Container nội dung chính */
+.main-wrapper {
+    min-height: calc(100vh - 200px);
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+/* ========== Navbar ========== */
+.navbar {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.navbar-brand span {
+    color: var(--primary-color);
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+    padding-inline: 0.8rem;
+}
+
+.navbar .nav-link.active,
+.navbar .nav-link:focus,
+.navbar .nav-link:hover {
+    color: var(--primary-color);
+}
+
+/* ========== Hero / banner chung ========== */
+.hero-section {
+    background-color: var(--bg-soft);
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero-section .hero-title {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.hero-section .hero-subtitle {
+    color: var(--muted-text);
+    font-size: 1rem;
+}
+
+/* ========== Card sản phẩm ========== */
+.product-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    background-color: #ffffff;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+    border-color: var(--primary-color);
+}
+
+.product-card img {
+    object-fit: cover;
+    width: 100%;
+}
+
+.product-card .card-body {
+    padding: 0.75rem 0.9rem 0.9rem;
+}
+
+.product-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.product-category {
+    font-size: 0.8rem;
+    color: var(--muted-text);
+    margin-bottom: 0.25rem;
+}
+
+.product-price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.product-price-old {
+    font-size: 0.85rem;
+    color: var(--muted-text);
+    text-decoration: line-through;
+    margin-left: 0.25rem;
+}
+
+.product-actions .btn {
+    width: 100%;
+}
+
+/* ========== Danh mục ========== */
+.category-card {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+}
+
+.category-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+}
+
+.category-card img {
+    height: 140px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.category-card .card-body {
+    text-align: center;
+    padding: 0.75rem;
+}
+
+/* ========== Badge & label ========== */
+.badge-sale {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background-color: var(--secondary-color);
+    color: #212529;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.45rem;
+    border-radius: 999px;
+}
+
+/* ========== Form & input chung ========== */
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.15rem rgba(40, 167, 69, 0.2);
+}
+
+.btn-primary,
+.btn-success {
+    border-radius: var(--radius-sm);
+}
+
+.btn-primary,
+.btn-success {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover,
+.btn-success:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* ========== Footer ========== */
+.site-footer {
+    background-color: var(--bg-light);
+    border-top: 1px solid var(--border-color);
+    padding: 2rem 0 1.5rem;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}
+
+.site-footer a {
+    color: var(--text-color);
+}
+
+.site-footer a:hover {
+    color: var(--primary-color);
+}
+
+/* ========== Tiện ích chung ========== */
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.text-muted-small {
+    font-size: 0.8rem;
+    color: var(--muted-text);
+}
+
+/* ========== Responsive nhỏ ========== */
+@media (max-width: 576px) {
+    .hero-section {
+        padding: 1.5rem 0;
+    }
+
+    .hero-section .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .navbar .nav-link {
+        padding-inline: 0.5rem;
+    }
+}
