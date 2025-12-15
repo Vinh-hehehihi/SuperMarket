@@ -1,7 +1,9 @@
 package com.example.supermarket.Entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "Employee")
 public class Employee {
@@ -16,7 +18,7 @@ public class Employee {
     private String email;
 
     private String username;
-    private String passwordHash;
+    private String password;
     private String role;
 
     private Boolean isActive = true;
