@@ -1,10 +1,11 @@
-package com.example.supermarket.Entity;
+package com.example.supermarket.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
+@Data
 @Table(name = "Employee")
 public class Employee {
 
