@@ -46,7 +46,7 @@ public class EmployeeService implements IEmployeeService {
         employee.setEmail(dto.getEmail().trim().replaceAll("\\s{2,}", " "));
 
         employee.setUsername(dto.getUsername().trim());
-        employee.setPasswordHash(dto.getPassword());
+        employee.setPassword(dto.getPassword());
 //        employee.setPasswordHash(encoder.encode(dto.getPassword()));
         employee.setRole(dto.getRole());
 
@@ -67,7 +67,7 @@ public class EmployeeService implements IEmployeeService {
         existingEmployee.setUsername(dto.getUsername().trim());
         existingEmployee.setRole(dto.getRole());
         if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
-            existingEmployee.setPasswordHash(dto.getPassword());
+            existingEmployee.setPassword(dto.getPassword());
         }
 
 //        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
