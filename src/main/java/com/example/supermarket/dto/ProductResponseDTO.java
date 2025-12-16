@@ -8,6 +8,7 @@ public class ProductResponseDTO {
     private Double unitPrice;
     private Integer stockQuantity;
     private String supplierName;
+    private Double costPrice;
 
     public ProductResponseDTO() {
     }
@@ -20,7 +21,12 @@ public class ProductResponseDTO {
         this.unitPrice = unitPrice;
         this.stockQuantity = stockQuantity;
         this.supplierName = supplierName;
+        this.costPrice = costPrice;
     }
+
+    public Double getCostPrice() {return costPrice;}
+
+    public void setCostPrice(Double costPrice) {this.costPrice = costPrice;}
 
     public Integer getProductID() {
         return productID;

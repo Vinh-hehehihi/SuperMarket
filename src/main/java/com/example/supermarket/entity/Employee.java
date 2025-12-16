@@ -1,6 +1,9 @@
 package com.example.supermarket.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Entity
@@ -23,4 +26,6 @@ public class Employee {
     private String role;
 
     private Boolean isActive = true;
+
+
 }

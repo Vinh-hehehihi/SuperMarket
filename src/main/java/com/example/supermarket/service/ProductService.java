@@ -2,6 +2,7 @@ package com.example.supermarket.service;
 
 import com.example.supermarket.dto.ProductRequestDTO;
 import com.example.supermarket.dto.ProductResponseDTO;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -17,5 +18,6 @@ public interface ProductService {
 
     // 4. Xóa
     void delete(Integer id);
+
 
 }

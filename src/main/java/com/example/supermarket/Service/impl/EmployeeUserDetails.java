@@ -1,6 +1,6 @@
-package com.example.supermarket.Service.impl;
+package com.example.supermarket.service.impl;
 
-import com.example.supermarket.Entity.Employee;
+import com.example.supermarket.entity.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
