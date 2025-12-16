@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <title>Sell Item</title>
+    <th:block layout:fragment="page-styles">
+        <style>
+            /* Page-specific CSS for sales.html */
+            .form-label {
+                color: #dc3545; /* Red for sales labels */
+            }
+            .btn-primary {
+                background-color: #dc3545; /* Red for primary buttons */
+                border-color: #dc3545;
+            }
+            .btn-primary:hover {
+                background-color: #c82333;
+                border-color: #bd2130;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<section layout:fragment="content">
+    <h3>Sell Item</h3>
+    <form th:action="@{/staff/sales/sell}" th:object="${product}" method="post">
+        <div class="mb-3">
+            <label for="productName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="productName" th:field="*{productName}" required>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" th:field="*{category.categoryID}" required>
+                <option value="">-- Select a Category --</option>
+                <option th:each="c : ${categories}" th:value="${c.categoryID}" th:text="${c.categoryName}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="unitPrice" class="form-label">Price</label>
+            <input type="number" step="0.01" class="form-control" id="unitPrice" th:field="*{unitPrice}" required>
+        </div>
+        <div class="mb-3">
+            <label for="stall" class="form-label">Stall</label>
+            <select class="form-select" id="stall" th:field="*{stall.stallID}" required>
+                <option value="">-- Select a Stall --</option>
+                <option th:each="s : ${stalls}" th:value="${s.stallID}" th:text="${s.stallName}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="supplier" class="form-label">Supplier</label>
+            <select class="form-select" id="supplier" th:field="*{supplier.supplierID}" required>
+                <option value="">-- Select a Supplier --</option>
+                <option th:each="s : ${suppliers}" th:value="${s.supplierID}" th:text="${s.supplierName}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Item</button>
+        <a href="/" class="btn btn-secondary">Back to Main Page</a>
+    </form>
+</section>
+</body>
+</html>

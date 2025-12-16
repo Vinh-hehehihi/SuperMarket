@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <title>Purchase Order Details</title>
+    <th:block layout:fragment="page-styles">
+        <style>
+            /* Page-specific CSS for purchase-order-details.html */
+            h3, h4 {
+                color: #007bff;
+            }
+            .card-title {
+                color: #28a745;
+            }
+            .btn-primary {
+                background-color: #28a745;
+                border-color: #28a745;
+            }
+            .btn-primary:hover {
+                background-color: #218838;
+                border-color: #1e7e34;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<section layout:fragment="content">
+    <div th:if="${purchaseOrder != null}">
+        <h3>Purchase Order Details</h3>
+        <p><strong>Order Date:</strong> <span th:text="${#dates.format(purchaseOrder.orderDate, 'dd-MM-yyyy')}"></span></p>
+        <p><strong>Supplier:</strong> <span th:text="${purchaseOrder.supplier.supplierName}"></span></p>
+        <p><strong>Total Amount:</strong> <span th:text="${purchaseOrder.totalAmount}"></span></p>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Add Item</h5>
+                <form th:action="@{/staff/purchase-orders/{poid}/add-item(poid=${purchaseOrder.poid})}" th:object="${purchaseItem}" method="post">
+                    <div class="mb-3">
+                        <label for="product" class="form-label">Product</label>
+                        <select class="form-select" id="product" th:field="*{product.productID}" required>
+                            <option value="">-- Select a Product --</option>
+                            <option th:each="p : ${products}" th:value="${p.productID}" th:text="${p.productName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" th:field="*{quantity}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="unitCost" class="form-label">Unit Cost</label>
+                        <input type="number" step="0.01" class="form-control" id="unitCost" th:field="*{unitCost}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                </form>
+            </div>
+        </div>
+
+        <h4 class="mt-4">Items</h4>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Cost</th>
+                <th>Total Cost</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${purchaseOrder.purchaseItems}">
+                <td th:text="${item.product.productName}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${item.unitCost}"></td>
+                <td th:text="${item.quantity * item.unitCost}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${purchaseOrder == null}">
+        <h3>Purchase Order not found</h3>
+        <p>The requested purchase order could not be found.</p>
+    </div>
+    <a href="/staff/purchase-orders" class="btn btn-secondary mt-3">Back to List</a>
+</section>
+</body>
+</html>
