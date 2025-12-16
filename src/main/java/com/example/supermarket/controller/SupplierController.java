@@ -23,16 +23,16 @@ public class SupplierController {
     @Autowired
     private SupplierValidator supplierValidator;
 
-    // 1. READ/LIST & SEARCH (GET /suppliers)
+    // READ/LIST & SEARCH
     @GetMapping
     public String listSuppliers(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
         List<SupplierResponseDTO> suppliers = supplierService.findAllOrSearch(keyword);
-        model.addAttribute("suppliers", suppliers); // Danh sách DTO
+        model.addAttribute("suppliers", suppliers);
         model.addAttribute("keyword", keyword);
-        return "supplier/list"; // Trả về supplier/list.html
+        return "supplier/list";
     }
 
-    // 2. HIỂN THỊ FORM TẠO MỚI (GET /suppliers/new)
+    //HIỂN THỊ FORM TẠO MỚI
     @GetMapping("/new")
     public String showNewForm(Model model) {
         model.addAttribute("supplierRequest", new SupplierRequestDTO());
@@ -41,55 +41,46 @@ public class SupplierController {
         return "supplier/new_edit";
     }
 
-    // 3. XỬ LÝ LƯU (CREATE)
+    //XỬ LÝ LƯU
     @PostMapping("/save")
     public String saveSupplier(@Valid @ModelAttribute("supplierRequest") SupplierRequestDTO requestDTO,
-                               BindingResult bindingResult, // Chứa kết quả validate
+                               BindingResult bindingResult,
                                Model model) {
 
-        // Gọi custom validator
         supplierValidator.validate(requestDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            // Nếu có lỗi, trả về trang form kèm thông báo lỗi
             model.addAttribute("isEdit", false);
-            return "supplier/new_edit"; // (Hoặc supplier/form nếu bạn đã đổi tên)
+            return "supplier/new_edit";
         }
 
         supplierService.save(requestDTO, null);
         return "redirect:/suppliers";
     }
 
-    // 4. HIỂN THỊ FORM CHỈNH SỬA
+    // HIỂN THỊ FORM CHỈNH SỬA
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model) {
         SupplierRequestDTO requestDTO = supplierService.getRequestDTOById(id);
-
-        // QUAN TRỌNG: Phải set ID vào DTO để khi submit form, ID này được gửi đi
         requestDTO.setSupplierID(id);
-
         model.addAttribute("supplierRequest", requestDTO);
         model.addAttribute("isEdit", true);
         model.addAttribute("supplierId", id);
         return "supplier/new_edit";
     }
 
-    // 5. XỬ LÝ CẬP NHẬT (UPDATE)
+    // XỬ LÝ CẬP NHẬT
     @PostMapping("/update/{id}")
     public String updateSupplier(@PathVariable("id") Integer id,
                                  @Valid @ModelAttribute("supplierRequest") SupplierRequestDTO requestDTO,
                                  BindingResult bindingResult,
                                  Model model) {
-
-        // Gán ID từ URL vào DTO để Validator biết đây là ai
         requestDTO.setSupplierID(id);
-
-        // Gọi custom validator
         supplierValidator.validate(requestDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("isEdit", true);
-            model.addAttribute("supplierId", id); // Cần truyền lại ID để form action đúng
+            model.addAttribute("supplierId", id);
             return "supplier/new_edit";
         }
 
@@ -97,7 +88,7 @@ public class SupplierController {
         return "redirect:/suppliers";
     }
 
-    // 6. XÓA (GET /suppliers/delete/{id})
+    //XÓA
     @GetMapping("/delete/{id}")
     public String deleteSupplier(@PathVariable("id") Integer id) {
         supplierService.delete(id);
@@ -105,16 +96,13 @@ public class SupplierController {
     }
 
 
-    // 7. XEM CHI TIẾT (GET /suppliers/detail/{id})
+    // XEM CHI TIẾT
     @GetMapping("/detail/{id}")
     public String viewSupplierDetail(@PathVariable("id") Integer id, Model model) {
-        // Tận dụng hàm getRequestDTOById vì nó lấy đủ hết thông tin (Email, Contact, Code...)
         SupplierRequestDTO supplier = supplierService.getRequestDTOById(id);
-
-        // Gán ID thủ công vì hàm getRequestDTOById có thể chưa set ID vào DTO (tùy logic mapper cũ)
         supplier.setSupplierID(id);
 
         model.addAttribute("supplier", supplier);
-        return "supplier/detail"; // Trả về file detail.html
+        return "supplier/detail";
     }
 }

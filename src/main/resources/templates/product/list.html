@@ -53,6 +53,7 @@
                     <tr th:if="${products.empty}">
                         <td colspan="7" class="text-center py-4 text-muted">Chưa có dữ liệu.</td>
                     </tr>
+
                     <tr th:each="p : ${products}">
                         <td class="ps-3 text-secondary" th:text="${p.productCode}"></td>
                         <td th:text="${p.productName}" class="fw-bold text-dark"></td>
@@ -66,7 +67,34 @@
 
                         <td class="text-center">
                             <a th:href="@{/products/edit/{id}(id=${p.productID})}" class="btn btn-warning btn-sm text-white me-1"><i class="fas fa-edit"></i></a>
-                            <a th:href="@{/products/delete/{id}(id=${p.productID})}" class="btn btn-danger btn-sm" onclick="return confirm('Xóa SP này?')"><i class="fas fa-trash"></i></a>
+
+                            <button type="button"
+                                    class="btn btn-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    th:data-bs-target="'#modalDelete-' + ${p.productID}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+
+                            <div class="modal fade" th:id="'modalDelete-' + ${p.productID}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Xác nhận xóa</h5>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-start">
+                                            Bạn có chắc chắn muốn xóa sản phẩm:<br>
+                                            <strong class="text-danger" th:text="${p.productName}"></strong>?<br>
+                                            <small class="text-muted">Hành động này không thể hoàn tác.</small>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+
+                                            <a th:href="@{/products/delete/{id}(id=${p.productID})}" class="btn btn-danger">Xóa ngay</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     </tbody>

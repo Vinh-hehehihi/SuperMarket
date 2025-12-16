@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface PurchaseOrderService {
     void createImportInvoice(PurchaseOrderRequestDTO request);
+
     List<PurchaseOrder> getAllOrders();
+
     PurchaseOrder getOrderById(Integer id);
 }
