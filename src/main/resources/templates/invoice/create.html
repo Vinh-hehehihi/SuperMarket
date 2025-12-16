@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/invoice/create}" th:object="${invoiceDTO}" method="post">
+
+    <input type="text" th:field="*{invoiceNumber}" placeholder="Invoice Number"/>
+
+    <select th:field="*{paymentMethod}">
+        <option value="CASH">Chuyển khoản</option>
+        <option value="CARD">Tiền mặt</option>
+    </select>
+
+    <input type="number" th:field="*{employeeID}" placeholder="Employee ID"/>
+    <input type="number" th:field="*{memberID}" placeholder="Member ID"/>
+
+    <!-- Invoice Lines -->
+    <div id="invoiceLinesContainer">
+        <div th:each="line, stat : *{invoiceLines}">
+            <input type="number" th:field="*{invoiceLines[__${stat.index}__].productID}" placeholder="Product ID"/>
+            <input type="number" th:field="*{invoiceLines[__${stat.index}__].quantity}" placeholder="Qty"/>
+            <input type="number" th:field="*{invoiceLines[__${stat.index}__].unitPrice}" placeholder="Price"/>
+        </div>
+    </div>
+    <button type="button" onclick="addLine()">+</button>
+    <button type="submit">Create Invoice</button>
+</form>
+<script th:inline="javascript">
+    let lineIndex = [[${#lists.size(invoiceDTO.invoiceLines)}]];
+    function addLine() {
+        const container = document.getElementById('invoiceLinesContainer');
+
+        const div = document.createElement('div');
+        div.className = 'invoice-line';
+
+        div.innerHTML =
+            '<input type="number" name="invoiceLines[' + lineIndex + '].productID" placeholder="Product ID"/>' +
+            '<input type="number" name="invoiceLines[' + lineIndex + '].quantity" placeholder="Qty"/>' +
+            '<input type="number" name="invoiceLines[' + lineIndex + '].unitPrice" placeholder="Price"/>';
+
+        container.appendChild(div);
+        lineIndex++;
+    }
+</script>
+</body>
+</html>

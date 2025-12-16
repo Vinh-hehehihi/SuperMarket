@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice Detail</title>
+</head>
+<body>
+<h2>Invoice Detail</h2>
+
+<p><strong>Invoice Number:</strong> <span th:text="${invoice.invoiceNumber}"></span></p>
+<p><strong>Date:</strong> <span th:text="${invoice.invoiceDate}"></span></p>
+<p><strong>Payment Method:</strong> <span th:text="${invoice.paymentMethod}"></span></p>
+<p><strong>Total Amount:</strong> <span th:text="${invoice.totalAmount}"></span></p>
+<p><strong>Employee:</strong> <span th:text="${invoice.employee.fullName}"></span></p>
+<p><strong>Member:</strong> <span th:text="${invoice.member != null ? invoice.member.fullName : 'No member'}"></span></p>
+
+<h3>Invoice Lines</h3>
+<table border="1">
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Subtotal</th>
+    </tr>
+    <tr th:each="line : ${invoice.invoiceLines}">
+        <td th:text="${line.product.productName}"></td>
+        <td th:text="${line.quantity}"></td>
+        <td th:text="${line.unitPrice}"></td>
+        <td th:text="${line.quantity * line.unitPrice}"></td>
+    </tr>
+</table>
+<br/>
+<a th:href="@{/homepage}">
+    <button type="button">Back to Home</button>
+</a>
+</body>
+</html>

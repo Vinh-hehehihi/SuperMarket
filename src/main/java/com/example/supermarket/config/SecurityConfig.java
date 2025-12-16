@@ -33,7 +33,16 @@ public class SecurityConfig {
                 .csrf(Customizer.withDefaults())
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/index","/login","/package","/ws/**","/auth/**","/orders/**", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers(
+                                "/index",
+                                "/login",
+                                "/ws/**",
+                                "/auth/**",
+                                "/orders/**",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/invoice/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
