@@ -2,11 +2,15 @@ package com.example.supermarket.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Entity
-@Data
 @Table(name = "Employee")
+@Getter
+@Setter
 public class Employee {
 
     @Id
@@ -20,7 +24,14 @@ public class Employee {
 
     private String username;
     private String password;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public enum Role{
+        ADMIN,
+        INVENTORY,
+        SELLER
+    }
 
     private Boolean isActive = true;
 }

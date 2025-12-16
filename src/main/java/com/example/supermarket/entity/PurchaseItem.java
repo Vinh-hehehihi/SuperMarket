@@ -1,9 +1,13 @@
 package com.example.supermarket.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "PurchaseItem")
+@Getter
+@Setter
 public class PurchaseItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

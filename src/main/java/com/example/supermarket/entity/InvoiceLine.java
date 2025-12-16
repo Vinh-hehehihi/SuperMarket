@@ -1,9 +1,11 @@
 package com.example.supermarket.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name ="InvoiceLine")
+@Data
 public class InvoiceLine {
 
     @Id

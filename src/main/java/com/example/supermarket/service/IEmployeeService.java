@@ -1,9 +1,18 @@
-package com.example.supermarket.Service;
+package com.example.supermarket.service;
 
-import com.example.supermarket.Entity.Employee;
+import com.example.supermarket.dto.EmployeeDTO;
+import com.example.supermarket.dto.EmployeeUpdateDTO;
+import com.example.supermarket.entity.Employee;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IEmployeeService {
+    Page<Employee> search(String keyword, String role, Pageable pageable);
+    Employee createEmployee(EmployeeDTO dto);
+    Employee updateEmployee(EmployeeUpdateDTO dto);
+    Employee deleteEmployee(Integer id); // Soft delete
+    EmployeeDTO getEmployeeDetail(Integer id);
     Employee findByUsernameOrEmail(String input);
     Employee loginEmployee (String usernameOrEmail, String password);
     boolean authenticateEmployee(String usernameOrEmail, String password, HttpSession session);

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-uppercase text-warning" href="#">SuperMarket</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="adminNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white-50" href="#" role="button" data-bs-toggle="dropdown">
+                            Hàng hóa & Kho
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/products">Quản Lý Sản Phẩm</a></li>
+                            <li><a class="dropdown-item" href="/purchase-orders">Lịch Sử Nhập Hàng</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Nhập kho</a></li>
+                            <li><a class="dropdown-item" href="#">Kiểm kho</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white-50" href="#" role="button" data-bs-toggle="dropdown">
+                            Giao dịch
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Lịch sử hóa đơn</a></li>
+                            <li><a class="dropdown-item" href="#">Khách trả hàng</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" href="/suppliers">Nhà cung cấp</a>
+                    </li>
+
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">
+                            <span class="fw-bold" th:text="${session.username != null ? session.username : 'Quản lý viên'}">Admin</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/profile">Hồ sơ cá nhân</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#">Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>
