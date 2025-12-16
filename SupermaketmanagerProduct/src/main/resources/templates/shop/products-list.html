@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <title th:text="${stall.stallName} + ' - ' + ${category.categoryName} + ' Products'"></title>
+    <th:block layout:fragment="page-styles">
+        <style>
+            .product-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+            .product-card {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+                transition: transform .2s;
+            }
+            .product-card:hover {
+                transform: scale(1.05);
+            }
+            .product-card-body {
+                padding: 1rem;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<section layout:fragment="content">
+    <h3 th:text="${stall.stallName} + ' - ' + ${category.categoryName} + ' Products'"></h3>
+
+    <div th:if="${products.isEmpty()}">
+        <p>No products found in this category for this stall.</p>
+    </div>
+    <div class="product-grid" th:unless="${products.isEmpty()}">
+        <div class="product-card" th:each="p : ${products}">
+            <div class="product-card-body">
+                <h5 th:text="${p.productName}"></h5>
+                <p>Code: <span th:text="${p.productCode}"></span></p>
+                <p>Unit: <span th:text="${p.unit}"></span></p>
+                <p>Price: <span th:text="'$' + ${p.unitPrice}"></span></p>
+                <p>Stock: <span th:text="${p.stockQuantity}"></span></p>
+                <p>Expiry: <span th:text="${#dates.format(p.expiryDate, 'dd-MM-yyyy')}"></span></p>
+                <p>Status:
+                    <span th:if="${p.active}" class="badge bg-success">Active</span>
+                    <span th:unless="${p.active}" class="badge bg-danger">Inactive</span>
+                </p>
+                <a class="btn btn-sm btn-outline-primary mt-2" th:href="@{/staff/products/{id}(id=${p.productID})}">View Details</a>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="window.history.back()" class="btn btn-primary mt-3">Go Back</button>
+    <a href="/" class="btn btn-secondary mt-3">Back to Main Page</a>
+</section>
+</body>
+</html>

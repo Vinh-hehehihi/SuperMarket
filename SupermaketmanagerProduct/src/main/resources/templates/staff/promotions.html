@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <title>Promotions</title>
+    <th:block layout:fragment="page-styles">
+        <style>
+            /* Page-specific CSS for promotions.html */
+            .card-title {
+                color: #ffc107; /* Amber for promotion titles */
+            }
+            .card-text {
+                font-style: italic;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<section layout:fragment="content">
+    <h3>Promotions</h3>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Membership Discount</h5>
+            <p class="card-text">Customers with an active membership card will receive a 5% discount on their total purchase.</p>
+        </div>
+    </div>
+    <a href="/" class="btn btn-secondary mt-3">Back to Main Page</a>
+</section>
+</body>
+</html>

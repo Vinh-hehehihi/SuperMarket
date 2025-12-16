@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <title th:text="${stall.stallName} + ' - Select Category'"></title>
+    <th:block layout:fragment="page-styles">
+        <style>
+            .list-group-item {
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+            }
+            .list-group-item:hover {
+                background-color: #f8f9fa;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<section layout:fragment="content">
+    <h3 th:text="${stall.stallName} + ' - Select Category'"></h3>
+
+    <div th:if="${categories.isEmpty()}">
+        <p>No categories found for this stall.</p>
+    </div>
+    <div class="list-group" th:unless="${categories.isEmpty()}">
+        <a th:each="cat : ${categories}"
+           th:href="@{/shop/{stallId}/categories/{categoryId}/products(stallId=${stall.stallID}, categoryId=${cat.categoryID})}"
+           class="list-group-item list-group-item-action">
+            <h5 class="mb-1" th:text="${cat.categoryName}"></h5>
+            <small th:text="${cat.description}"></small>
+        </a>
+    </div>
+
+    <button onclick="window.history.back()" class="btn btn-primary mt-3">Go Back</button>
+    <a href="/" class="btn btn-secondary mt-3">Back to Main Page</a>
+</section>
+</body>
+</html>

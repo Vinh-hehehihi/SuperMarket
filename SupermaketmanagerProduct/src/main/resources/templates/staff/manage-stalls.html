@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <title>Manage Stalls</title>
+    <th:block layout:fragment="page-styles">
+        <style>
+            /* Page-specific CSS for manage-stalls.html */
+            .card-title {
+                color: #20c997; /* Teal for card titles */
+            }
+            .btn-primary {
+                background-color: #20c997;
+                border-color: #20c997;
+            }
+            .btn-primary:hover {
+                background-color: #17a2b8;
+                border-color: #17a2b8;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<section layout:fragment="content">
+    <h3>Manage Stalls</h3>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${stall.stallID == null} ? 'Add New Stall' : 'Edit Stall'"></h5>
+            <form th:action="@{/staff/manage-stalls/save}" th:object="${stall}" method="post">
+                <input type="hidden" th:field="*{stallID}" />
+                <div class="mb-3">
+                    <label for="stallCode" class="form-label">Stall Code</label>
+                    <input type="text" class="form-control" id="stallCode" th:field="*{stallCode}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="stallName" class="form-label">Stall Name</label>
+                    <input type="text" class="form-control" id="stallName" th:field="*{stallName}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="locationNote" class="form-label">Location Note</label>
+                    <input type="text" class="form-control" id="locationNote" th:field="*{locationNote}">
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" th:field="*{category.categoryID}" required>
+                        <option value="">-- Select a Category --</option>
+                        <option th:each="c : ${categories}" th:value="${c.categoryID}" th:text="${c.categoryName}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="/staff/manage-stalls" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${stalls}">
+            <td th:text="${s.stallID}"></td>
+            <td th:text="${s.stallCode}"></td>
+            <td th:text="${s.stallName}"></td>
+            <td th:text="${s.locationNote}"></td>
+            <td th:text="${s.category.categoryName}"></td>
+            <td>
+                <a class="btn btn-sm btn-outline-secondary" th:href="@{/staff/manage-stalls/edit/{id}(id=${s.stallID})}">Edit</a>
+                <a class="btn btn-sm btn-outline-danger" th:href="@{/staff/manage-stalls/delete/{id}(id=${s.stallID})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/" class="btn btn-secondary mt-3">Back to Main Page</a>
+</section>
+</body>
+</html>

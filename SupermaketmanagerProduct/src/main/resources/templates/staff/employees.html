@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <title>Employees and Purchase Orders</title>
+    <th:block layout:fragment="page-styles">
+        <style>
+            /* Page-specific CSS for employees.html */
+            h3 {
+                color: #17a2b8; /* Info blue for headings */
+            }
+            .table thead th {
+                background-color: #17a2b8;
+                color: white;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<section layout:fragment="content">
+    <h3>Employees</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="e : ${employees}">
+            <td th:text="${e.fullName}"></td>
+            <td th:text="${e.email}"></td>
+            <td th:text="${e.role}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Purchase Orders</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Order Date</th>
+            <th>Supplier</th>
+            <th>Total Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="po : ${purchaseOrders}">
+            <td th:text="${#dates.format(po.orderDate, 'dd-MM-yyyy')}"></td>
+            <td th:text="${po.supplier.supplierName}"></td>
+            <td th:text="${po.totalAmount}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/" class="btn btn-secondary mt-3">Back to Main Page</a>
+</section>
+</body>
+</html>
