@@ -1,7 +1,7 @@
-package com.example.supermarket.Service.impl;
+package com.example.supermarket.service.impl;
 
-import com.example.supermarket.Entity.Employee;
-import com.example.supermarket.Repository.EmployeeRepository;
+import com.example.supermarket.entity.Employee;
+import com.example.supermarket.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
