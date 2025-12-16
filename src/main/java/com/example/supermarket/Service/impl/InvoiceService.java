@@ -9,11 +9,14 @@ import com.example.supermarket.repository.MemberRepository;
 import com.example.supermarket.repository.ProductRepository;
 import com.example.supermarket.service.IInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InvoiceService implements IInvoiceService {
@@ -32,6 +35,10 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public Invoice createInvoice(InvoiceDTO invoiceDTO) {
+
+        if (invoiceRepository.existsByInvoiceNumber(invoiceDTO.getInvoiceNumber())) {
+            throw new RuntimeException("Số hóa đơn đã tồn tại, vui lòng nhập số khác");
+        }
 
         Invoice invoice = new Invoice();
         invoice.setInvoiceNumber(invoiceDTO.getInvoiceNumber());
@@ -73,4 +80,39 @@ public class InvoiceService implements IInvoiceService {
         invoice.setTotalAmount(totalAmount);
         return invoiceRepository.save(invoice);
     }
+
+    @Override
+    public List<Invoice> getAllInvoices() {
+        return invoiceRepository.findAll();
+    }
+
+    @Override
+    public Invoice getById(int id) {
+        return invoiceRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Hoa don khong ton tai"));
+    }
+
+    @Override
+    public Page<Invoice> searchInvoices(Integer memberId, Integer employeeId, Date startDate, Date endDate, Pageable pageable) {
+        if (startDate != null && endDate != null) {
+            return invoiceRepository.findByInvoiceDateBetween(startDate, endDate, pageable);
+        }
+
+        if (memberId != null && employeeId != null) {
+            return invoiceRepository
+                    .findByMember_MemberIDAndEmployee_EmployeeID(memberId, employeeId, pageable);
+        }
+
+        if (memberId != null) {
+            return invoiceRepository.findByMember_MemberID(memberId, pageable);
+        }
+
+        if (employeeId != null) {
+            return invoiceRepository.findByEmployee_EmployeeID(employeeId, pageable);
+        }
+
+        return invoiceRepository.findAll(pageable);
+    }
+
+
 }
