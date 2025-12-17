@@ -38,7 +38,7 @@ public class SupplierController {
         model.addAttribute("supplierRequest", new SupplierRequestDTO());
         model.addAttribute("isEdit", false);
         model.addAttribute("supplierId", null);
-        return "supplier/new_edit";
+        return "new-edit";
     }
 
     //XỬ LÝ LƯU
@@ -51,7 +51,7 @@ public class SupplierController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("isEdit", false);
-            return "supplier/new_edit";
+            return "new-edit";
         }
 
         supplierService.save(requestDTO, null);
@@ -66,7 +66,7 @@ public class SupplierController {
         model.addAttribute("supplierRequest", requestDTO);
         model.addAttribute("isEdit", true);
         model.addAttribute("supplierId", id);
-        return "supplier/new_edit";
+        return "new-edit";
     }
 
     // XỬ LÝ CẬP NHẬT
@@ -81,7 +81,7 @@ public class SupplierController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("isEdit", true);
             model.addAttribute("supplierId", id);
-            return "supplier/new_edit";
+            return "new-edit";
         }
 
         supplierService.save(requestDTO, id);
