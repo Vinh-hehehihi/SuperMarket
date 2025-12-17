@@ -44,7 +44,6 @@
             <th>Họ Tên</th>
             <th>Email</th>
             <th>SĐT</th>
-            <th>Role</th>
             <th style="width: 220px;">Hành động</th>
         </tr>
         </thead>
@@ -59,11 +58,6 @@
             <td th:text="${emp.fullName}"></td>
             <td th:text="${emp.email}"></td>
             <td th:text="${emp.phone}"></td>
-            <td>
-                <span class="badge"
-                      th:classappend="${emp.role == 'ADMIN' ? 'bg-danger' : 'bg-info'}"
-                      th:text="${emp.role}"></span>
-            </td>
             <td>
                 <a th:href="@{/admin/employees/detail/{id}(id=${emp.employeeID})}"
                    class="btn btn-sm btn-info text-white" title="Xem chi tiết">
