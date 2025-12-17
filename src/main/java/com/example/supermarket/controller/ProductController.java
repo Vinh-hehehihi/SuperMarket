@@ -37,7 +37,7 @@ public class ProductController {
         model.addAttribute("isEdit", false);
         // Load danh sách NCC cho dropdown
         model.addAttribute("listSuppliers", supplierService.getAllSuppliers());
-        return "product/new_edit";
+        return "product/new-edit";
     }
 
     // 3. LƯU
@@ -47,7 +47,7 @@ public class ProductController {
         if (result.hasErrors()) {
             model.addAttribute("isEdit", false);
             model.addAttribute("listSuppliers", supplierService.getAllSuppliers()); // Load lại nếu lỗi
-            return "product/new_edit";
+            return "product/new-edit";
         }
         productService.save(dto);
         return "redirect:/products";
@@ -59,7 +59,7 @@ public class ProductController {
         model.addAttribute("productRequest", productService.getById(id));
         model.addAttribute("isEdit", true);
         model.addAttribute("listSuppliers", supplierService.getAllSuppliers());
-        return "product/new_edit";
+        return "product/new-edit";
     }
 
     // 5. CẬP NHẬT
@@ -69,7 +69,7 @@ public class ProductController {
         if (result.hasErrors()) {
             model.addAttribute("isEdit", true);
             model.addAttribute("listSuppliers", supplierService.getAllSuppliers());
-            return "product/new_edit";
+            return "new-edit";
         }
         productService.save(dto);
         return "redirect:/products";

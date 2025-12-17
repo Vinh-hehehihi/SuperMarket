@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class PurchaseOrder {
     @JoinColumn(name = "createdBy")
     private Employee employee;
 
-    @OneToMany(mappedBy = "purchaseOrder")
-    private List<PurchaseItem> items;
+    @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PurchaseItem> items = new ArrayList<>();
+
 }

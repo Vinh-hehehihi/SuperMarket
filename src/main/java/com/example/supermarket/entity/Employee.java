@@ -2,10 +2,15 @@ package com.example.supermarket.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Entity
 @Table(name = "Employee")
+@Getter
+@Setter
 public class Employee {
 
     @Id
