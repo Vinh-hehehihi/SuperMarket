@@ -23,7 +23,6 @@ public class SupplierController {
     @Autowired
     private SupplierValidator supplierValidator;
 
-    // READ/LIST & SEARCH
     @GetMapping
     public String listSuppliers(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
         List<SupplierResponseDTO> suppliers = supplierService.findAllOrSearch(keyword);
@@ -32,7 +31,6 @@ public class SupplierController {
         return "supplier/list";
     }
 
-    //HIỂN THỊ FORM TẠO MỚI
     @GetMapping("/new")
     public String showNewForm(Model model) {
         model.addAttribute("supplierRequest", new SupplierRequestDTO());
@@ -41,7 +39,6 @@ public class SupplierController {
         return "supplier/new_edit";
     }
 
-    //XỬ LÝ LƯU
     @PostMapping("/save")
     public String saveSupplier(@Valid @ModelAttribute("supplierRequest") SupplierRequestDTO requestDTO,
                                BindingResult bindingResult,
@@ -58,7 +55,6 @@ public class SupplierController {
         return "redirect:/suppliers";
     }
 
-    // HIỂN THỊ FORM CHỈNH SỬA
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model) {
         SupplierRequestDTO requestDTO = supplierService.getRequestDTOById(id);
@@ -69,7 +65,6 @@ public class SupplierController {
         return "supplier/new_edit";
     }
 
-    // XỬ LÝ CẬP NHẬT
     @PostMapping("/update/{id}")
     public String updateSupplier(@PathVariable("id") Integer id,
                                  @Valid @ModelAttribute("supplierRequest") SupplierRequestDTO requestDTO,

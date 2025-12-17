@@ -5,6 +5,7 @@ import com.example.supermarket.dto.EmployeeUpdateDTO;
 import com.example.supermarket.entity.Employee;
 import com.example.supermarket.repository.EmployeeRepository;
 import com.example.supermarket.service.IEmployeeService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,9 +47,8 @@ public class EmployeeService implements IEmployeeService {
         employee.setEmail(dto.getEmail().trim().replaceAll("\\s{2,}", " "));
 
         employee.setUsername(dto.getUsername().trim());
-        employee.setPassword(dto.getPassword());
-//        employee.setPasswordHash(encoder.encode(dto.getPassword()));
-        employee.setRole(dto.getRole());
+        employee.setPassword(passwordEncoder.encode(dto.getPassword()));
+        employee.setRole(Employee.Role.SELLER);
 
         employee.setIsActive(true);
 
@@ -65,14 +65,10 @@ public class EmployeeService implements IEmployeeService {
         existingEmployee.setPhone(dto.getPhone().trim());
         existingEmployee.setEmail(dto.getEmail().trim().replaceAll("\\s{2,}", " "));
         existingEmployee.setUsername(dto.getUsername().trim());
-        existingEmployee.setRole(dto.getRole());
+        existingEmployee.setRole(Employee.Role.SELLER);
         if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
-            existingEmployee.setPassword(dto.getPassword());
+            existingEmployee.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
-
-//        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
-//            existingEmployee.setPasswordHash(encoder.encode(dto.getPassword().trim()));
-//        }
 
         return employeeRepository.save(existingEmployee);
     }
@@ -98,7 +94,7 @@ public class EmployeeService implements IEmployeeService {
         dto.setPhone(employee.getPhone());
         dto.setEmail(employee.getEmail());
         dto.setUsername(employee.getUsername());
-        dto.setRole(employee.getRole());
+//        dto.setRole(employee.getRole());
         dto.setIsActive(employee.getIsActive());
 
         return dto;
@@ -112,6 +108,15 @@ public class EmployeeService implements IEmployeeService {
 
     }
 
+    @Override
+    public Employee loginEmployee(String usernameOrEmail, String password) {
+        return null;
+    }
+
+    @Override
+    public boolean authenticateEmployee(String usernameOrEmail, String password, HttpSession session) {
+        return false;
+    }
 
 
     @Override

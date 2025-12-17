@@ -35,7 +35,7 @@ public class InvoiceLineController {
     // Xóa 1 dòng
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id) {
-        InvoiceLine invoiceLine = invoiceLineService.getAllByInvoice(null) // tạm thời cần get invoice từ line
+        InvoiceLine invoiceLine = invoiceLineService.getAllByInvoice(null)
                 .stream().filter(line -> line.getInvoiceLineID().equals(id)).findFirst().orElse(null);
         if (invoiceLine != null) {
             Integer invoiceId = invoiceLine.getInvoice().getInvoiceID();

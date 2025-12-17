@@ -27,13 +27,13 @@ public class MemberController {
 
         model.addAttribute("members", memberPage);
         model.addAttribute("keyword", keyword);
-        return "member/list"; // Bạn cần tạo folder templates/member/list.html
+        return "member/list";
     }
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("memberDTO", new MemberDTO());
-        return "member/form"; // Bạn cần tạo templates/member/form.html
+        return "member/form";
     }
 
     @PostMapping("/save")
@@ -59,7 +59,7 @@ public class MemberController {
     public String viewMemberDetail(@PathVariable Integer id, Model model) {
         MemberDTO dto = memberService.getMemberDetail(id);
         model.addAttribute("member", dto);
-        return "member/detail"; // Bạn cần tạo templates/member/detail.html
+        return "member/detail";
     }
 
     @GetMapping("/delete/{id}")

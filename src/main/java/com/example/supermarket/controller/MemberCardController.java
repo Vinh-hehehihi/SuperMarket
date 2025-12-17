@@ -22,7 +22,7 @@ public class MemberCardController {
     private MemberCardService cardService;
 
     @Autowired
-    private MemberRepository memberRepository; // Cần cái này để lấy tên Member hiển thị
+    private MemberRepository memberRepository;
 
     @Autowired
     private MemberCardRepository cardRepository;
