@@ -18,5 +18,4 @@ public interface IEmployeeService {
     boolean authenticateEmployee(String usernameOrEmail, String password, HttpSession session);
 
     Employee createOrUpdate(Employee model);
-    Employee createOrUpdate(Employee model);
 }
