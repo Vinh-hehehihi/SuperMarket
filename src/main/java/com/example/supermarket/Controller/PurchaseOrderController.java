@@ -26,7 +26,6 @@ public class PurchaseOrderController {
         this.productService = productService;
     }
 
-    // --- Helper function để load dữ liệu dropdown (NCC, Sản phẩm) ---
     private void loadCommonData(Model model) {
         model.addAttribute("suppliers", supplierService.getAllSuppliers());
         model.addAttribute("products", productService.findAllOrSearch(null));
@@ -41,45 +40,40 @@ public class PurchaseOrderController {
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         PurchaseOrderRequestDTO poRequest = new PurchaseOrderRequestDTO();
-        // Khởi tạo list rỗng để tránh lỗi null
         poRequest.setItems(new ArrayList<>());
-        // Thêm sẵn 1 dòng trống đầu tiên cho đẹp
         poRequest.getItems().add(new PurchaseItemDTO());
 
         model.addAttribute("poRequest", poRequest);
-        loadCommonData(model); // Load danh sách SP/NCC
+        loadCommonData(model);
         return "purchase_order/create";
     }
 
     @PostMapping("/save")
     public String saveOrder(@ModelAttribute("poRequest") PurchaseOrderRequestDTO dto,
-                            @RequestParam(value = "addRow", required = false) String addRow, // Nút thêm dòng
-                            @RequestParam(value = "removeRow", required = false) Integer removeRow, // Nút xóa dòng (chứa index)
+                            @RequestParam(value = "addRow", required = false) String addRow,
+                            @RequestParam(value = "removeRow", required = false) Integer removeRow,
                             Model model,
                             RedirectAttributes redirectAttributes) {
 
-        // 1. Xử lý logic THÊM DÒNG
         if (addRow != null) {
             if (dto.getItems() == null) dto.setItems(new ArrayList<>());
-            dto.getItems().add(new PurchaseItemDTO()); // Thêm 1 object rỗng vào List Java
+            dto.getItems().add(new PurchaseItemDTO());
 
-            loadCommonData(model); // Load lại dropdown
-            return "purchase_order/create"; // Trả về trang cũ (reload form)
+            loadCommonData(model);
+            return "purchase_order/create";
         }
 
-        // 2. Xử lý logic XÓA DÒNG
+
         if (removeRow != null) {
             if (dto.getItems() != null && removeRow >= 0 && removeRow < dto.getItems().size()) {
-                dto.getItems().remove(removeRow.intValue()); // Xóa phần tử tại index chỉ định
+                dto.getItems().remove(removeRow.intValue());
             }
 
             loadCommonData(model);
             return "purchase_order/create";
         }
 
-        // 3. Xử lý logic LƯU (SAVE) chính thức
         try {
-            // Lọc bỏ các dòng rỗng (nếu user lỡ thêm mà ko nhập)
             if (dto.getItems() != null) {
                 dto.getItems().removeIf(item -> item.getProductID() == null || item.getQuantity() == null);
             }
@@ -96,7 +90,6 @@ public class PurchaseOrderController {
         }
     }
 
-    // ... Các method detail, inventory giữ nguyên ...
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Integer id, Model model) {
         model.addAttribute("order", poService.getOrderById(id));

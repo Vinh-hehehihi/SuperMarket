@@ -3,35 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>Invoice Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-<h2>Invoice Detail</h2>
+<body class="bg-light">
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow border-0">
 
-<p><strong>Invoice Number:</strong> <span th:text="${invoice.invoiceNumber}"></span></p>
-<p><strong>Date:</strong> <span th:text="${invoice.invoiceDate}"></span></p>
-<p><strong>Payment Method:</strong> <span th:text="${invoice.paymentMethod}"></span></p>
-<p><strong>Total Amount:</strong> <span th:text="${invoice.totalAmount}"></span></p>
-<p><strong>Employee:</strong> <span th:text="${invoice.employee.fullName}"></span></p>
-<p><strong>Member:</strong> <span th:text="${invoice.member != null ? invoice.member.fullName : 'No member'}"></span></p>
+                <!-- Header -->
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="fas fa-file-invoice me-2"></i>Chi Tiết Hóa Đơn
+                    </h4>
+                </div>
 
-<h3>Invoice Lines</h3>
-<table border="1">
-    <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Unit Price</th>
-        <th>Subtotal</th>
-    </tr>
-    <tr th:each="line : ${invoice.invoiceLines}">
-        <td th:text="${line.product.productName}"></td>
-        <td th:text="${line.quantity}"></td>
-        <td th:text="${line.unitPrice}"></td>
-        <td th:text="${line.quantity * line.unitPrice}"></td>
-    </tr>
-</table>
-<br/>
-<a th:href="@{/homepage}">
-    <button type="button">Back to Home</button>
-</a>
+                <!-- Body -->
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <h2 class="text-primary fw-bold"
+                            th:text="${invoice.invoiceNumber}">Invoice Number</h2>
+                        <span class="badge bg-secondary fs-6"
+                              th:text="'Ngày: ' + ${invoice.invoiceDate}">Ngày</span>
+                    </div>
+
+                    <hr>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="fw-bold text-muted">Phương thức thanh toán:</label>
+                            <p class="fs-5" th:text="${invoice.paymentMethod}">Payment Method</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-bold text-muted">Tổng tiền:</label>
+                            <p class="fs-5 text-danger fw-bold"
+                               th:text="${invoice.totalAmount}">Total Amount</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-bold text-muted">Nhân viên:</label>
+                            <p class="fs-5"
+                               th:text="${invoice.employee.fullName}">Employee</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-bold text-muted">Thành viên:</label>
+                            <p class="fs-5"
+                               th:text="${invoice.member != null ? invoice.member.fullName : 'No member'}">
+                                Member
+                            </p>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mb-3">Chi tiết các dòng hóa đơn</h5>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered align-middle">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th class="text-end">Số lượng</th>
+                                <th class="text-end">Đơn giá</th>
+                                <th class="text-end">Thành tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="line : ${invoice.invoiceLines}">
+                                <td th:text="${line.product.productName}">Product</td>
+                                <td class="text-end" th:text="${line.quantity}">Qty</td>
+                                <td class="text-end" th:text="${line.unitPrice}">Unit Price</td>
+                                <td class="text-end"
+                                    th:text="${line.quantity * line.unitPrice}">Subtotal</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer bg-white p-3 text-end">
+                    <a th:href="@{/invoice}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -7,6 +7,8 @@
 <body>
 
 <div class="container mt-5">
+    <div th:replace="~{fragments/header :: header}"></div>
+
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
             <h4 th:text="${employeeDTO.employeeID == null ? 'Thêm mới nhân viên' : 'Cập nhật nhân viên'}"></h4>
@@ -67,6 +69,7 @@
         </div>
     </div>
 </div>
-
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
-
-<div th:fragment="header">
+<div th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold text-uppercase text-warning" href="#">SuperMarket</a>
@@ -22,8 +18,8 @@
                             <li><a class="dropdown-item" href="/products">Quản Lý Sản Phẩm</a></li>
                             <li><a class="dropdown-item" href="/purchase-orders">Lịch Sử Nhập Hàng</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Nhập kho</a></li>
-                            <li><a class="dropdown-item" href="#">Kiểm kho</a></li>
+                            <li><a class="dropdown-item" href="/purchase-orders/create">Nhập kho</a></li>
+                            <li><a class="dropdown-item" href="/purchase-orders/inventory">Báo cáo kiểm kho</a></li>
                         </ul>
                     </li>
 
@@ -39,6 +35,26 @@
 
                     <li class="nav-item">
                         <a class="nav-link text-white-50" href="/suppliers">Nhà cung cấp</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white-50" href="#" role="button" data-bs-toggle="dropdown">
+                            Hóa đơn bán hàng
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/invoice">Danh sách hóa đơn</a></li>
+                            <li><a class="dropdown-item" href="/invoice/create">Tạo hóa đơn bán lẻ</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white-50" href="#" role="button" data-bs-toggle="dropdown">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/admin/employees">Quản lý nhân viên</a>
+                            <li><a class="dropdown-item" href="/admin/members">Quản lý thành viên</a>
+                        </ul>
                     </li>
 
                 </ul>
@@ -60,5 +76,3 @@
     </nav>
 </div>
 
-</body>
-</html>
