@@ -53,8 +53,8 @@ public class MemberService implements IMemberService {
     public Member deleteMember(Integer id) {
         Member existingMember = memberRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy thành viên"));
-        existingMember.setIsActive(false); // Xóa mềm
-        return memberRepository.save(existingMember);
+        memberRepository.delete(existingMember);
+        return existingMember;
     }
 
     @Override

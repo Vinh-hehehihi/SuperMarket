@@ -78,8 +78,8 @@ public class EmployeeService implements IEmployeeService {
         Employee existingEmployee = employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy nhân viên này"));
 
-        existingEmployee.setIsActive(false);
-        return employeeRepository.save(existingEmployee);
+        employeeRepository.delete(existingEmployee);
+        return existingEmployee;
     }
 
     @Override
