@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chi Tiết Phiếu Nhập</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container py-4 flex-grow-1">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold text-primary mb-0">Chi Tiết Phiếu Nhập</h3>
+        <a th:href="@{/purchase-orders}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Về danh sách
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3 border-bottom">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-dark">
+                    <i class="fas fa-file-invoice me-2 text-primary"></i>
+                    Mã phiếu: <span class="text-primary" th:text="${order.poNumber}"></span>
+                </h5>
+                <span class="text-muted"><i class="far fa-clock me-1"></i> <span th:text="${#dates.format(order.poDate, 'dd/MM/yyyy HH:mm')}"></span></span>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <div class="row mb-4 bg-light p-3 rounded mx-0">
+                <div class="col-md-6 border-end">
+                    <p class="mb-1 text-muted small text-uppercase fw-bold">Nhà Cung Cấp</p>
+                    <h5 class="fw-bold text-dark" th:text="${order.supplier.supplierName}"></h5>
+                </div>
+                <div class="col-md-3 border-end text-center">
+                    <p class="mb-1 text-muted small text-uppercase fw-bold">Trạng Thái</p>
+                    <span class="badge bg-success fs-6" th:text="${order.status}"></span>
+                </div>
+                <div class="col-md-3 text-end">
+                    <p class="mb-1 text-muted small text-uppercase fw-bold">Tổng Giá Trị</p>
+                    <h4 class="text-danger fw-bold" th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' đ'"></h4>
+                </div>
+            </div>
+
+            <h6 class="fw-bold mb-3"><i class="fas fa-list me-2"></i>Danh sách hàng hóa</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle">
+                    <thead class="table-dark">
+                    <tr>
+                        <th class="text-center" style="width: 5%">STT</th>
+                        <th>Sản Phẩm</th>
+                        <th style="width: 10%">Đơn Vị</th>
+                        <th class="text-center" style="width: 10%">Số Lượng</th>
+                        <th class="text-end" style="width: 15%">Giá Nhập</th>
+                        <th class="text-end" style="width: 15%">Thành Tiền</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item, stat : ${order.items}">
+                        <td class="text-center" th:text="${stat.count}"></td>
+                        <td class="fw-bold" th:text="${item.product.productName}"></td>
+                        <td th:text="${item.product.unit}"></td>
+                        <td class="text-center" th:text="${item.quantity}"></td>
+                        <td class="text-end" th:text="${#numbers.formatDecimal(item.unitCost, 0, 'COMMA', 0, 'POINT')}"></td>
+                        <td class="text-end fw-bold text-dark" th:text="${#numbers.formatDecimal(item.quantity * item.unitCost, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

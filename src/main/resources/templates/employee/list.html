@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý nhân viên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<div class="container mt-4">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <h2 class="text-center mb-4">Danh sách nhân viên</h2>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <form th:action="@{/admin/employees}" method="get" class="d-flex gap-2">
+                <input type="text" name="keyword" class="form-control"
+                       placeholder="Tìm theo tên hoặc SĐT..."
+                       th:value="${keyword}" style="max-width: 300px;">
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-magnifying-glass"></i> Tìm
+                </button>
+
+                <a th:if="${keyword != null && keyword != ''}"
+                   th:href="@{/admin/employees}"
+                   class="btn btn-secondary" title="Hủy tìm kiếm">
+                    <i class="fa-solid fa-xmark"></i> Hủy
+                </a>
+            </form>
+        </div>
+
+        <div class="col-md-4 text-end">
+            <a th:href="@{/admin/employees/create}" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i> Thêm nhân viên
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Mã NV</th>
+            <th>Họ Tên</th>
+            <th>Email</th>
+            <th>SĐT</th>
+            <th style="width: 220px;">Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${employees.totalElements == 0}">
+            <td colspan="7" class="text-center text-muted py-3">Không tìm thấy nhân viên nào.</td>
+        </tr>
+
+        <tr th:each="emp : ${employees.content}">
+            <td th:text="${emp.employeeID}"></td>
+            <td th:text="${emp.employeeCode}"></td>
+            <td th:text="${emp.fullName}"></td>
+            <td th:text="${emp.email}"></td>
+            <td th:text="${emp.phone}"></td>
+            <td>
+                <a th:href="@{/admin/employees/detail/{id}(id=${emp.employeeID})}"
+                   class="btn btn-sm btn-info text-white" title="Xem chi tiết">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+
+                <a th:href="@{/admin/employees/edit/{id}(id=${emp.employeeID})}"
+                   class="btn btn-sm btn-warning" title="Chỉnh sửa">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+
+                <button type="button"
+                        class="btn btn-sm btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal"
+                        th:data-delete-url="@{/admin/employees/delete/{id}(id=${emp.employeeID})}"
+                        title="Xóa">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav th:if="${employees.totalPages > 1}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${employees.first} ? 'disabled'">
+                <a class="page-link" th:href="@{/admin/employees(page=${employees.number - 1}, keyword=${keyword})}">
+                    <i class="fa-solid fa-angle-left"></i> Trước
+                </a>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link" th:text="${(employees.number + 1) + ' / ' + employees.totalPages}"></span>
+            </li>
+            <li class="page-item" th:classappend="${employees.last} ? 'disabled'">
+                <a class="page-link" th:href="@{/admin/employees(page=${employees.number + 1}, keyword=${keyword})}">
+                    Sau <i class="fa-solid fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Xác nhận xóa
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa nhân viên này không? <br>
+                <span class="text-danger fw-bold">Hành động này không thể hoàn tác!</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+                <a id="btn-confirm-delete" href="" class="btn btn-danger">Xóa ngay</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const deleteModal = document.getElementById('deleteModal');
+
+    deleteModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+
+        const url = button.getAttribute('data-delete-url');
+
+        const confirmBtn = document.getElementById('btn-confirm-delete');
+        confirmBtn.href = url;
+    });
+</script>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
