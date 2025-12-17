@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
-
-<div th:fragment="header">
+<div th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold text-uppercase text-warning" href="#">SuperMarket</a>
@@ -41,6 +37,16 @@
                         <a class="nav-link text-white-50" href="/suppliers">Nhà cung cấp</a>
                     </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white-50" href="#" role="button" data-bs-toggle="dropdown">
+                            Hóa đơn bán hàng
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/invoice">Danh sách hóa đơn</a></li>
+                            <li><a class="dropdown-item" href="/invoice/create">Tạo hóa đơn bán lẻ</a></li>
+                        </ul>
+                    </li>
+
                 </ul>
 
                 <div class="d-flex align-items-center">
@@ -60,5 +66,3 @@
     </nav>
 </div>
 
-</body>
-</html>
